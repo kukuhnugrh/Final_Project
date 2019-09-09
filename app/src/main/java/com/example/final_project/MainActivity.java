@@ -1,5 +1,6 @@
 package com.example.final_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     Validation valid = new Validation();
+    private Button button;
     @Override
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -27,8 +29,19 @@ public class MainActivity extends AppCompatActivity {
                 String uname = String.valueOf(usernameEditText.getText());
                 String password = String.valueOf(passwordEditText.getText());
                 if(valid.isValid(uname, password)){
-                    setContentView(R.layout.success);
+                    setContentView(R.layout.home);
+                    login();
                 }
+            }
+        });
+    }
+    protected void login(){
+        loginButton = findViewById(R.id.login);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent home = new Intent(MainActivity.this, HomeApps.class);
+                startActivity(home);
             }
         });
     }
