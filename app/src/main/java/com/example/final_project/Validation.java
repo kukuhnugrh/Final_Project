@@ -1,11 +1,8 @@
 package com.example.final_project;
 
-public class Validation {
+class Validation {
 
-    public boolean isValid(String uname, String pword){
-        if(uname.equals("imTheKing") && pword.equals("alwaysToxic")){
-            return true;
-        }
-        return false;
+    boolean isValid(String uname, String pword){
+        return uname.equals("imTheKing") && pword.equals("alwaysToxic");
     }
 }

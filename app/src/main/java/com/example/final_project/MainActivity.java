@@ -3,6 +3,7 @@ package com.example.final_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,25 +24,17 @@ public class MainActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener(){
+        loginButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View view){
                 String uname = String.valueOf(usernameEditText.getText());
                 String password = String.valueOf(passwordEditText.getText());
                 if(valid.isValid(uname, password)){
                     setContentView(R.layout.home);
-                    login();
+                    Intent home = new Intent(MainActivity.this, HomeApps.class);
+                    finish();
+                    startActivity(home);
                 }
-            }
-        });
-    }
-    protected void login(){
-        loginButton = findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent home = new Intent(MainActivity.this, HomeApps.class);
-                startActivity(home);
             }
         });
     }
