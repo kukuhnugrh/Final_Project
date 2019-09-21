@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordEditText;
     Validation valid = new Validation();
     private Button button;
+    public static String flag = "flag";
+
     @Override
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
                 if(valid.isValid(uname, password)){
                     setContentView(R.layout.home);
                     Intent home = new Intent(MainActivity.this, HomeApps.class);
-                    finish();
+                    Bundle b = new Bundle();
+                    home.putExtra(flag, usernameEditText.getText().toString());
                     startActivity(home);
                 }
             }
