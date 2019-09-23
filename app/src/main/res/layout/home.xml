@@ -96,4 +96,15 @@
         android:layout_marginEnd="54dp"
         android:layout_marginRight="24dp"
         android:text="FRAGMEN 2" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.viewpager.widget.ViewPager>
 </RelativeLayout>

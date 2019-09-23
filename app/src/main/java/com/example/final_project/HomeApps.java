@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.net.ConnectivityManagerCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.Objects;
 
@@ -37,11 +38,14 @@ public class HomeApps extends AppCompatActivity {
         setContentView(R.layout.home);
         //keAbout();
         logOut();
-        fragmenDua();
+        //fragmenDua();
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         Bundle b = getIntent().getExtras();
         String s;
         s = b.getString("flag");
         Toast.makeText(this, "HALO "+s, Toast.LENGTH_SHORT).show();
+        createNotificationChannel();
     }
 
 
@@ -63,17 +67,6 @@ public class HomeApps extends AppCompatActivity {
             public void onClick(View v){
                 Intent main = new Intent(HomeApps.this, MainActivity.class);
                 startActivity(main);
-            }
-        });
-    }
-
-    protected void fragmenDua(){
-        firstFragmen = findViewById(R.id.frag2);
-        firstFragmen.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent mainA = new Intent(HomeApps.this, SecondFrag.class);
-                startActivity(mainA);
             }
         });
     }
@@ -132,19 +125,19 @@ public class HomeApps extends AppCompatActivity {
         }
     };
 
-//    protected void onResume(){
-//        super.onResume();
-//        if(!isReciverRegistered){
-//            isReciverRegistered =  true;
-//            wifiConnected = true;
-//            registerReceiver(receiver, new IntentFilter("android.net.wifi.STATE_CHANGE"));
-//        }
-//    }
-//
-//    protected void onPause(){
-//        super.onPause();
-//        if(isReciverRegistered){
-//
-//        }
-//    }
+    protected void onResume(){
+        super.onResume();
+        if(!isReciverRegistered){
+            isReciverRegistered =  true;
+            wifiConnected = true;
+            registerReceiver(receiver, new IntentFilter("android.net.wifi.STATE_CHANGE"));
+        }
+    }
+
+    protected void onPause(){
+        super.onPause();
+        if(isReciverRegistered){
+
+        }
+    }
 }
