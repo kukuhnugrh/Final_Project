@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,6 +27,8 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.net.ConnectivityManagerCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.final_project.service.MyJobService;
+
 import java.util.Objects;
 
 @SuppressLint("Registered")
@@ -31,6 +37,7 @@ public class HomeApps extends AppCompatActivity {
     Button firstFragmen;
     boolean isReciverRegistered = false;
     boolean wifiConnected = false;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,5 +146,31 @@ public class HomeApps extends AppCompatActivity {
         if(isReciverRegistered){
 
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void scheduleJob(View v) {
+        ComponentName componentName = new ComponentName(this, MyJobService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void cancelJob(View v) {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.cancel(123);
+        Log.d(TAG, "Job cancelled");
     }
 }
